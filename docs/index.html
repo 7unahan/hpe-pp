@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HPE-PP Project Page</title>
+<meta name="description" content="What do head pose estimators reveal? An audit of identity and soft-biometric leakage in head pose pipelines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: a research project page read by reviewers and practitioners
+   IDEA a newspaper graphics-desk spread about one HPE pipeline
+   PICTURE the pipeline drawn as stations from face crop to three angles, each station's leakage as a bar on a log scale
+   COLOUR pale pink ground, near-black ink, teal for HPE features, claret for the angles
+   TYPE Libre Franklin 800 headlines + Libre Franklin text
+   LAYOUT title and finding across the top, the pipeline chart full width beneath; phone: title, chart, controls */
+:root{color-scheme:light dark;--bg:light-dark(#ffe3dc,#1c1512);--card:light-dark(#fff3ef,#261d19);--ink:light-dark(#1a1817,#f4e9e4);--mute:light-dark(#5c4f4a,#bfaea7);--rule:light-dark(#e9c4ba,#47362f);--teal:light-dark(#0d7680,#3fb6bf);--claret:light-dark(#990f3d,#ff6f95);--sand:light-dark(#c9a89d,#7d665c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'Libre Franklin',Arial,sans-serif;overflow-x:clip}
+a{color:var(--teal)}
+img{max-width:100%;height:auto;display:block}
+.band{padding-block:clamp(28px,4vw,56px);padding-inline:max(5vw,16px)}
+.wrap{max-width:1160px;margin:0 auto}
+h1{font-weight:800;font-size:clamp(32px,4.6vw,50px);line-height:1.05;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance;max-width:22ch}
+h2{font-weight:800;font-size:clamp(24px,2.6vw,32px);line-height:1.1;letter-spacing:-.015em;margin:0 0 12px;text-wrap:balance}
+h3{font-size:18px;margin:0 0 6px}
+p{margin:0 0 12px;max-width:70ch}
+.lede{font-size:19px;max-width:62ch}
+.who{color:var(--mute);margin-bottom:18px}
+.who b{color:var(--ink);font-weight:600}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--bg);font-weight:600;text-decoration:none;border:0;font:inherit;font-weight:600;cursor:pointer}
+.btn.off{background:transparent;color:var(--mute);border:1.5px solid var(--rule);cursor:default}
+.btn:focus-visible,.tab:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.top{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:end}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.big{border-top:3px solid var(--ink);padding-top:10px}
+.big b{display:block;font-size:clamp(30px,3.6vw,44px);font-weight:800;line-height:1;letter-spacing:-.02em;white-space:nowrap}
+.big span{display:block;color:var(--mute);font-size:14px;line-height:1.35;margin-top:6px}
+.big.c b{color:var(--claret)}.big.t b{color:var(--teal)}
+.panel{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:clamp(16px,2.4vw,28px)}
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:14px;margin-bottom:14px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--rule);background:transparent;color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+.tab[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+.fig{position:relative;min-height:360px}
+.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+svg text{font:13px 'Libre Franklin',Arial,sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:4px}
+.panel svg text{stroke:var(--card)}
+.note{color:var(--mute);font-size:14px;margin:10px 0 0}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,36px)}
+.sc{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.sc .tag{font-weight:700;color:var(--teal)}
+.rows{display:grid;gap:7px;margin-top:6px}
+.r{display:grid;grid-template-columns:minmax(8.5em,13em) minmax(0,1fr) 3.4em;gap:10px;align-items:center;font-size:15px}
+.r .bar{height:16px;background:color-mix(in srgb,var(--sand) 35%,transparent);border-radius:2px;position:relative}
+.r .bar i{position:absolute;inset:0 auto 0 0;background:var(--teal);border-radius:2px}
+.r.ang .bar i{background:var(--claret)}.r.ref .bar i{background:var(--sand)}
+.r .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.r .bar .ch{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+th{font-weight:700;border-bottom:2px solid var(--ink)}
+td.a{color:var(--claret);font-weight:600}
+.rec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:r}
+.rec div{border-top:3px solid var(--teal);padding-top:10px}
+pre{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:16px;font-size:13.5px;line-height:1.5;margin:0;overflow-x:auto}
+.copyrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+.fig1{background:#fff;border-radius:6px;padding:10px;border:1px solid var(--rule)}
+footer{color:var(--mute);font-size:14px}
+@media(max-width:860px){.top,.cols,.rec{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:520px){.figs{grid-template-columns:minmax(0,1fr)}.r{grid-template-columns:minmax(7em,9em) minmax(0,1fr) 3em;font-size:14px}table{font-size:13px}th,td{padding:6px 5px}}
+@media(prefers-reduced-motion:no-preference){.grow{transition:width .5s ease}}
+</style>
+</head>
+<body>
+
+<header class="band"><div class="wrap top">
+  <div>
+    <h1>What do head pose estimators reveal?</h1>
+    <p class="who"><b>Tunahan Parlayıcı</b>, <b>Erchan Aptoula</b>, <b>Yücel Saygın</b> · Sabancı University</p>
+    <p class="lede">Head pose estimation is often called privacy-friendly because it outputs three angles. We audit four estimators and find that everything computed before those angles identifies people and predicts gender, age group and perceived race about as well as a generic image network.</p>
+    <div class="btns">
+      <span class="btn off" aria-disabled="true">Paper: under review</span>
+      <span class="btn off" aria-disabled="true">Code: released with the paper</span>
+      <a class="btn" href="#cite">BibTeX</a>
+    </div>
+  </div>
+  <div class="figs">
+    <div class="big t"><b>46–75%</b><span>re-identified in a group of 10 from one intermediate feature vector (chance 10%)</span></div>
+    <div class="big t"><b>89–96%</b><span>gender balanced accuracy from the best layer (chance 50%)</span></div>
+    <div class="big c"><b>≈2×</b><span>chance: identity from the three angles alone</span></div>
+  </div>
+</div></header>
+
+<section class="band" style="padding-top:0"><div class="wrap panel">
+  <div class="head">
+    <div><h2>Leakage stays high until the very last step</h2>
+    <p style="margin:0">Rank-1 identification among 158 people as a multiple of chance, at each point of the pipeline (training-free matcher, LFW).</p></div>
+    <div class="tabs" id="tabs" role="group" aria-label="Choose an estimator"></div>
+  </div>
+  <div class="fig" id="pipe"><svg id="pipeS" role="img" aria-label="Identification along the pipeline"></svg></div>
+  <p class="note" id="pipeNote"></p>
+</div></section>
+
+<section class="band"><div class="wrap cols">
+  <div class="sc">
+    <h2>Two privacy promises, two scenarios</h2>
+    <p><span class="tag">Scenario A: the image never leaves the device.</span> What leaves is an artifact of the pipeline: an intermediate feature vector (split inference, a shared feature store), facial landmarks, 3DMM coefficients or the angles.</p>
+    <p><span class="tag">Scenario B: the image is shared, protected first.</span> The user applies TIP-IM, AMT-GAN, an ensemble adversarial attack, blurring or pixelation before sending the image to a pose service.</p>
+    <p>In both, the adversary holds a few labeled photos of each person in a known group and runs the same open-source model. Gallery and probe are always different photographs. Attackers range from a training-free matcher to a similarity learned on 452 other people and a learner fit on the gallery.</p>
+  </div>
+  <div>
+    <h2>In a known group of 10</h2>
+    <p style="margin-bottom:6px">Share of probes re-identified, mean of 500 random groups. The black tick is chance.</p>
+    <div class="rows" id="groups"></div>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Soft biometrics follow the same pattern</h2>
+  <p>Balanced accuracy of a linear classifier trained on other images. Gender on CelebA (person-disjoint), perceived race and age group on FairFace. Labels are annotators' perceived categories, used only to measure aggregate risk.</p>
+  <div class="scroll"><table id="soft"><thead><tr><th>Representation</th><th>Gender (CelebA)</th><th>Gender (FairFace)</th><th>Race, 7 groups</th><th>Age, 9 groups</th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="band"><div class="wrap cols">
+  <div>
+    <h2>No protection hides identity and keeps pose</h2>
+    <p>Horizontal: share of ArcFace R50 accuracy that survives the protection. Vertical: pose utility, the Privacy Robustness Index (PRI; a 3° error halves it), averaged over the four estimators.</p>
+    <div class="fig" style="min-height:330px"><svg id="protS" role="img" aria-label="Protections: identity retention against pose utility"></svg></div>
+  </div>
+  <div class="sc">
+    <h2>What the protections leave</h2>
+    <p><b>TIP-IM and AMT-GAN</b> keep pose (PRI about 0.8) but leave 78–88% of ArcFace accuracy. They fool FaceNet on 72–80% of genuine pairs at a false-accept rate of 10<sup>−3</sup>, ArcFace on only 16–25%.</p>
+    <p><b>An alignment-aware ensemble attack</b> (ε = 16/255) drives ArcFace R50 to 6% and the unseen R100 to 5%, yet HPE head inputs keep 34–48% of their identity signal, and so does ImageNet ResNet-50 (46%).</p>
+    <p><b>Blurring and pixelation</b> remove identity only where PRI falls to 0.05 or below.</p>
+    <p><b>A linear projection</b> that removes 256 identity directions either breaks pose (about 6.5°) or, when constrained to keep the angles, leaves a retrained attacker at 23–68 times chance.</p>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>The four estimators and the layers we read</h2>
+  <p>Bold marks the layer that identifies people best in each model. Late is the input of the pose head.</p>
+  <img class="fig1" src="static/fig1.png" alt="Figure 1 of the paper: the HPE pipeline, the layers read in each model, and leakage per artifact" width="1575" height="649">
+</div></section>
+
+<section class="band"><div class="wrap">
+  <h2>Recommendations</h2>
+  <div class="rec">
+    <div><h3>Release angles only</h3><p>Process images on the device; transmit and store the three angles and nothing computed before them.</p></div>
+    <div><h3>Treat features as biometric data</h3><p>Intermediate features, landmarks and 3DMM shape coefficients identify people and reveal gender, age group and perceived race.</p></div>
+    <div><h3>Test protections on unseen recognizers</h3><p>Report identity retention against modern recognizers the method did not target, together with the pose error.</p></div>
+  </div>
+</div></section>
+
+<section class="band" id="cite"><div class="wrap">
+  <div class="copyrow"><h2 style="margin:0">BibTeX</h2><button class="btn" id="copy" type="button">Copy</button></div>
+<pre id="bib">@article{parlayici2026hpepp,
+  title   = {What Do Head Pose Estimators Reveal? An Audit of Identity
+             and Soft-Biometric Leakage in Head Pose Pipelines},
+  author  = {Parlay{\i}c{\i}, Tunahan and Aptoula, Erchan and Sayg{\i}n, Y{\"u}cel},
+  note    = {Under review},
+  year    = {2026}
+}</pre>
+</div></section>
+
+<footer class="band" style="padding-top:0"><div class="wrap">
+  <p><b>Ethics.</b> We use only public datasets (LFW, CelebA, CelebA-HQ, FairFace). The soft-biometric classifiers trained for this audit are not released, and we report no results about individuals.</p>
+  <p>This work was supported by TÜBİTAK under the 2244 Industrial PhD Fellowship Program.</p>
+</div></footer>
+
+<script>
+{
+const D={
+ '6DRepNet':[['layer2',.177],['layer3',.173],['head input',.093],['6D output',.018],['angles',.014]],
+ '3DDFA-V2':[['dw3_2',.071],['dw4_2',.152],['head input',.109],['62 params',.074],['angles',.013]],
+ 'WHENet':[['block 2',.070],['block 4',.158],['head input',.183],['angles',.010]],
+ 'TokenHPE':[['block 4',.227],['block 8',.400],['block 12',.231],['tokens',.064],['angles',.016]]
+};
+const CH=1/158, REF=.172, VIT=.619;
+let cur='TokenHPE';
+const tabs=document.getElementById('tabs');
+tabs.innerHTML=Object.keys(D).map(k=>`<button class="tab" type="button" data-k="${k}" aria-pressed="${k===cur}">${k}</button>`).join('');
+tabs.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;cur=b.dataset.k;for(const t of tabs.children)t.setAttribute('aria-pressed',t.dataset.k===cur);draw();});
+const s=document.getElementById('pipeS');
+const col=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function draw(){
+ const W=s.clientWidth,H=s.clientHeight,st=D[cur],narrow=W<560;
+ const L=narrow?44:52,R=narrow?10:24,T=34,B=narrow?70:62,pw=W-L-R,ph=H-T-B;
+ const ys=[1,3,10,30,100];const lg=v=>Math.log10(v),top=lg(130);
+ const y=v=>T+ph-(lg(Math.max(v,1))/top)*ph;
+ const n=st.length,step=pw/n,bw=Math.min(step*.52,120);
+ let g='';
+ for(const t of ys){g+=`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--rule)"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" style="stroke-width:0">${t}×</text>`}
+ const ry=y(REF/CH);
+ g+=`<line x1="${L}" x2="${W-R}" y1="${ry}" y2="${ry}" stroke="var(--ink)" stroke-dasharray="5 5" stroke-width="1.5"/><text x="${W-R}" y="${ry-7}" text-anchor="end">${narrow?'':'ImageNet ResNet-50 '+Math.round(REF/CH)+'×'}</text>`;
+ if(cur==='TokenHPE'){const vy=y(VIT/CH);g+=`<line x1="${L}" x2="${W-R}" y1="${vy}" y2="${vy}" stroke="var(--sand)" stroke-dasharray="2 4" stroke-width="2"/><text x="${W-R}" y="${vy-7}" text-anchor="end">${narrow?'':'ViT before pose training '+Math.round(VIT/CH)+'×'}</text>`}
+ st.forEach(([lab,v],i)=>{const m=v/CH,cx=L+step*i+step/2,yy=y(m),ang=lab==='angles';
+  g+=`<rect x="${cx-bw/2}" y="${yy}" width="${bw}" height="${T+ph-yy}" rx="2" fill="${ang?'var(--claret)':'var(--teal)'}"/>`;
+  g+=`<text x="${cx}" y="${yy-8}" text-anchor="middle" style="font-weight:700">${m<10?m.toFixed(1):Math.round(m)}×</text>`;
+  g+=`<text x="${cx}" y="${T+ph+20}" text-anchor="middle">${lab}</text>`;
+  if(i<n-1&&!narrow)g+=`<path d="M${cx+bw/2+6} ${T+ph+16}h${step-bw-12}" stroke="var(--sand)" stroke-width="2" marker-end="url(#ar)"/>`;
+ });
+ if(!narrow)g+=`<text x="${L}" y="${T+ph+48}" style="fill:var(--mute)">face crop → early → middle → late → pose head → angles</text>`;
+ s.innerHTML=`<defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="var(--sand)"/></marker></defs>`+g;
+ const best=st.reduce((a,b)=>b[1]>a[1]?b:a);
+ document.getElementById('pipeNote').textContent=`${cur}: ${best[0]} identifies ${(best[1]*100).toFixed(1)}% of probes (${Math.round(best[1]/CH)}× chance); the angles ${(st[st.length-1][1]*100).toFixed(1)}%. Dashed line: ImageNet ResNet-50 (${Math.round(REF/CH)}×)${cur==='TokenHPE'?'; dotted: the ViT before pose training ('+Math.round(VIT/CH)+'×)':''}. Log scale; chance is 1×.`;
+}
+const ro=new ResizeObserver(draw);ro.observe(s);
+
+const G=[['ArcFace R50 (recognizer)',.994,'ref'],['TokenHPE block 8',.749,''],['WHENet head input',.505,''],['6DRepNet layer2',.489,''],['ImageNet ResNet-50',.466,'ref'],['3DDFA-V2 dw4_2',.461,''],['Landmarks, 68 in 3D',.317,''],['Landmarks, 5-point',.252,''],['Angles (best of 4)',.150,'ang']];
+document.getElementById('groups').innerHTML=G.map(([n,v,c])=>`<div class="r ${c}"><span>${n}</span><span class="bar"><i class="grow" style="width:${v*100}%"></i><span class="ch" style="left:10%"></span></span><span class="v">${Math.round(v*100)}%</span></div>`).join('');
+
+const S=[['ViT-B/16 block 8 (TokenHPE init.)','.973','.909','.605','.445'],['TokenHPE block 8','.956','.858','.546','.409'],['ImageNet ResNet-50','.901','.805','.388','.307'],['WHENet head input','.898','.766','.389','.311'],['3DDFA-V2 dw4_2','.897','.758','.374','.264'],['6DRepNet layer2','.886','.758','.407','.279'],['Landmarks, 68 in 3D','.861','.648','.265','.218'],['Angles (4 models)','.575–.607','.498–.502','.133–.165','.110'],['Chance','.500','.500','.143','.111']];
+document.querySelector('#soft tbody').innerHTML=S.map(r=>`<tr>${r.map((c,i)=>`<td${r[0].startsWith('Angles')&&i?' class="a"':''}>${c}</td>`).join('')}</tr>`).join('');
+
+const P=[['ε = 8',.68,.735,-12,22,'end'],['ε = 16',.06,.62,12,-12,'start'],['TIP-IM',.78,.82,0,-16,'middle'],['AMT-GAN',.87,.80,0,26,'middle']];
+const ps=document.getElementById('protS');
+function drawP(){
+ const W=ps.clientWidth,H=ps.clientHeight,L=44,R=16,T=14,B=44,pw=W-L-R,ph=H-T-B;
+ const x=v=>L+v*pw,y=v=>T+ph-v*ph;let g='';
+ g+=`<rect x="${x(0)}" y="${y(1)}" width="${x(.5)-x(0)}" height="${y(.8)-y(1)}" style="fill:rgba(13,150,160,.38)"/><text x="${x(.02)}" y="${y(1)+18}">goal</text>`;
+ g+=`<rect x="${x(0)}" y="${y(.05)}" width="${x(.5)-x(0)}" height="${y(0)-y(.05)}" style="fill:rgba(204,40,90,.25)"/><text x="${x(.02)}" y="${y(.05)-6}">blur, pixelation</text>`;
+ for(const t of [0,.2,.4,.6,.8,1]){g+=`<line x1="${x(0)}" x2="${x(1)}" y1="${y(t)}" y2="${y(t)}" stroke="var(--rule)"/><text x="${L-6}" y="${y(t)+4}" text-anchor="end" style="stroke-width:0">${t.toFixed(1)}</text><text x="${x(t)}" y="${T+ph+18}" text-anchor="middle" style="stroke-width:0">${t.toFixed(1)}</text>`}
+ g+=`<line x1="${x(.5)}" x2="${x(.5)}" y1="${y(0)}" y2="${y(1)}" stroke="var(--ink)" stroke-dasharray="4 4"/>`;
+ g+=`<text x="${x(.5)}" y="${T+ph+38}" text-anchor="middle">ArcFace R50 retention (lower = more private)</text>`;
+ P.forEach(([n,a,b,dx,dy,an])=>{g+=`<circle cx="${x(a)}" cy="${y(b)}" r="8" fill="var(--teal)" stroke="var(--bg)" stroke-width="2"/><text x="${x(a)+dx}" y="${y(b)+dy}" text-anchor="${an}">${n}</text>`});
+ ps.innerHTML=g;
+}
+const ro2=new ResizeObserver(drawP);ro2.observe(ps);
+
+document.getElementById('copy').addEventListener('click',async e=>{try{await navigator.clipboard.writeText(document.getElementById('bib').textContent);e.target.textContent='Copied'}catch(_){e.target.textContent='Select and copy'}setTimeout(()=>e.target.textContent='Copy',1800)});
+}
+</script>
+</body>
+</html>
